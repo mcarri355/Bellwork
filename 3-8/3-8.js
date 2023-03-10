@@ -1,5 +1,3 @@
-
-
 function area(){
     let triangle = (1/2 * 12 * 18);
     document.getElementById("area").value = triangle;
@@ -48,3 +46,17 @@ function f2c(){
     document.getElementById("f2c").value = ((far - 32) * 5/9)
  + " Degrees Celsius "
 }
+
+
+
+function squareSum(num1,num2,num3){
+    let total = 0
+    arr = [num1,num2,num3]
+    for(let i = 0; i<arr.length; i++){
+        total += (arr[i] * arr[i])
+    }
+    return total
+}
+
+console.log(squareSum(1,2,2))
+
