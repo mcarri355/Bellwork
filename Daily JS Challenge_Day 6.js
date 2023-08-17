@@ -76,17 +76,30 @@ try {
   let codes = input.split('\r\n');
   for (let i = 0; i < codes.length; i++) {
     let codes2 = codes[i].split(/[- :]+/);
-    // use charat 4 loop and done
+    console.log(codes2);
+    if (
+      codes2[2] === codes2[3].charAt(codes2[0] - 1) ||
+      codes2[2] === codes2[3].charAt(codes2[1] - 1)
+    ) {
+      validPasswords++;
+    }
+    if (
+      codes2[2] === codes2[3].charAt(codes2[0] - 1) &&
+      codes2[2] === codes2[3].charAt(codes2[1] - 1)
+    ) {
+      validPasswords--;
+    }
   }
+  console.log(validPasswords);
 } catch (err) {
   console.log(err);
 }
 
 // New Js Challenge Part 1
 
-try {
-  const input = fs.readFileSync('Daily JS Challenge_Day 6_Input.txt', 'utf8');
-  let slope = input.split('\r\n');
-} catch (err) {
-  console.log(err);
-}
+// try {
+//   const input = fs.readFileSync('Daily JS Challenge_Day 6_Input.txt', 'utf8');
+//   let slope = input.split('\r\n');
+// } catch (err) {
+//   console.log(err);
+// }
