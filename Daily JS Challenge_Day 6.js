@@ -76,7 +76,6 @@ try {
   let codes = input.split('\r\n');
   for (let i = 0; i < codes.length; i++) {
     let codes2 = codes[i].split(/[- :]+/);
-    console.log(codes2);
     if (
       codes2[2] === codes2[3].charAt(codes2[0] - 1) ||
       codes2[2] === codes2[3].charAt(codes2[1] - 1)
@@ -97,9 +96,27 @@ try {
 
 // New Js Challenge Part 1
 
-// try {
-//   const input = fs.readFileSync('Daily JS Challenge_Day 6_Input.txt', 'utf8');
-//   let slope = input.split('\r\n');
-// } catch (err) {
-//   console.log(err);
-// }
+try {
+  const input = fs.readFileSync('Daily JS Challenge_Day 6_Input.txt', 'utf8');
+  function countTreesEncountered(input, right, down) {
+    const rows = input.split('\r\n');
+    const mapWidth = rows[0].length;
+    const mapHeight = rows.length;
+    let treeCount = 0;
+    let x = 0; // Starting position on the x-axis
+
+    for (let y = 0; y < mapHeight; y += down) {
+      if (rows[y][x % mapWidth] === '#') {
+        treeCount++;
+      }
+      x += right;
+    }
+
+    return treeCount;
+  }
+
+  const result = countTreesEncountered(input, 3, 1); // Right 3, Down 1
+  console.log(result);
+} catch (err) {
+  console.log(err);
+}
