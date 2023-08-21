@@ -54,3 +54,5 @@ try {
 } catch (err) {
   console.log('Error');
 }
+
+https://bobbyhadz.com/blog/javascript-convert-array-of-objects-to-map
