@@ -47,12 +47,12 @@ try {
   const input = fs
     .readFileSync('Daily JS Challenge_Day 7_Input.txt', 'utf8')
     .split('\r\n');
-  console.log(input);
   for (let i = 0; i < input.length; i++) {
     let input2 = input[i].split(/[' ']/);
+    console.log(input2);
   }
 } catch (err) {
   console.log('Error');
 }
 
-https://bobbyhadz.com/blog/javascript-convert-array-of-objects-to-map
+// https://bobbyhadz.com/blog/javascript-convert-array-of-objects-to-map
