@@ -44,15 +44,34 @@ Count the number of valid passports - those that have all required fields. Treat
 const fs = require('fs');
 
 try {
-  const input = fs
-    .readFileSync('Daily JS Challenge_Day 7_Input.txt', 'utf8')
-    .split('\r\n');
-  for (let i = 0; i < input.length; i++) {
-    let input2 = input[i].split(/[' ']/);
-    console.log(input2);
-  }
-} catch (err) {
-  console.log('Error');
-}
+  const inputText = fs.readFileSync('Daily JS Challenge_Day 7_Input.txt', 'utf8');
 
-// https://bobbyhadz.com/blog/javascript-convert-array-of-objects-to-map
+  // Split the input into passport segments using double line breaks
+  const passportSegments = inputText.trim().split(/\r\n\r\n/);
+
+  // Convert passport segments into arrays of key-value pairs. \s+ splits at any whitespace
+  const passportDataArray = passportSegments.map(segment => segment.split(/\s+/));
+  // Function to validate a passport's required fields
+  function isPassportValid(passport) {
+    // List of fields required for a valid passport
+    const requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
+
+    // Check if all required fields are present in the passport
+    return requiredFields.every(field => {
+      // Check if any entry starts with the required field's key
+      return passport.some(entry => entry.startsWith(`${field}:`));
+    });
+  }
+
+  // Filter out valid passports based on the isPassportValid function
+  const validPassports = passportDataArray.filter(isPassportValid);
+
+  // Calculate the count of valid passports
+  const numberOfValidPassports = validPassports.length;
+
+  // Output the count of valid passports
+  console.log('Number of valid passports: ' + numberOfValidPassports);
+} catch (error) {
+  // Handle any errors that occur during reading or processing
+  console.log(error);
+}
