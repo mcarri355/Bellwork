@@ -36,3 +36,72 @@ FFFBBBFRRR: row 14, column 7, seat ID 119.
 BBFFBBFRLL: row 102, column 4, seat ID 820.
 As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?
 */
+
+const fs = require('fs');
+try{
+    const input = fs.readFileSync('Daily JS Challenge_Day 8_Input.txt', 'utf8').split('\r\n');
+    // This is where the different parts of the original input are held
+let input2 = [];
+let input3 = [];
+
+// Separates the original input then pushes them
+for (let i = 0; i < input.length; i++) {
+    input2.push(input[i].substring(0, 7));
+    input3.push(input[i].substring(7, 10));
+}
+
+// Declares the spot where the converted inputs will go
+let outputRows = [];
+let outputCols = [];
+
+// Converts the first input and then pushes it 
+for (let i = 0; i < input2.length; i++) {
+    let rowFront = 0;
+    let rowBack = 127;
+
+    for (let j = 0; j < input2[i].length; j++) {
+        if (input2[i][j] == 'F') {
+            rowBack = Math.floor((rowFront + rowBack) / 2);
+        } else {
+            rowFront = Math.ceil((rowFront + rowBack) / 2);
+        }
+    }
+    outputRows.push(rowFront);
+}
+
+// Converts the second input and then pushes it
+for (let i = 0; i < input3.length; i++) {
+    let colLeft = 0;
+    let colRight = 8;
+
+    for (let j = 0; j < input3[i].length; j++) {
+        if (input3[i][j] == 'L') {
+            colRight = Math.floor((colLeft + colRight) / 2);
+        } else {
+            colLeft = Math.ceil((colLeft + colRight) / 2);
+        }
+    }
+    outputCols.push(colLeft);
+}
+
+// Converts the first and second output into their grid spots and then pushes it
+let gridSpots = [];
+for (let i = 0; i < input.length; i++) {
+    gridSpots.push(outputRows[i] * 8 + outputCols[i]);
+}
+
+let highestSpot = gridSpots[0];
+
+gridSpots.forEach((spot) => {
+    if (spot > highestSpot) {
+        highestSpot = spot;
+    }
+});
+
+// Console.logs all answers
+console.log(`The highest seat ID on the boarding pass is Seat ID ${highestSpot}`)
+
+}
+catch(err){
+    console.log(err);
+}
