@@ -27,7 +27,7 @@ a
 a
 
 b
-This list represents answers from five groups:
+This list represents answers from five arr1:
 
 -The first group contains one person who answered "yes" to 3 questions: a, b, and c.
 -The second group contains three people; combined, they answered "yes" to 3 questions: a, b, and c.
@@ -43,23 +43,23 @@ try {
   const input = fs
     .readFileSync('Daily JS Challenge_Day 9_Input.txt', 'utf8')
     .split('\r\n');
-  let groups = [];
-  let group = [];
+  let arr1 = [];
+  let arr2 = [];
   for (let i = 0; i < input.length; i++) {
     if (input[i] != '') {
-      group.push(input[i].split(''));
+      arr2.push(input[i].split(''));
     } else {
-      groups.push(group);
-      group = [];
+      arr1.push(arr2);
+      arr2 = [];
     }
   }
-  groups = groups.map((x) => {
+  arr1 = arr1.map((x) => {
     return x.flatMap((y) => {
       return y;
     });
   });
   let total = 0;
-  groups.map((x) => {
+  arr1.map((x) => {
     let temp = [];
     for (let i = 0; i < x.length; i++) {
       if (!temp.includes(x[i])) {
