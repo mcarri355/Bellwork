@@ -26,3 +26,18 @@ A light red bag, which can hold bright white and muted yellow bags, either of wh
 So, in this example, the number of bag colors that can eventually contain at least one shiny gold bag is 4.
 
 How many bag colors can eventually contain at least one shiny gold bag? (The list of rules is quite long; make sure you get all of it.)*/
+
+const fs = require('fs');
+try {
+  const input = fs
+    .readFileSync('Daily JS Challenge_Day 10_Input.txt', 'utf8')
+    .split('\r\n');
+  let bags = new Set();
+  for (let i = 0; i < input.length; i++) {
+    let input2 = input[i].split('contain');
+    console.log(input2);
+  }
+  console.log(bags);
+} catch (err) {
+  console.log('Error');
+}
