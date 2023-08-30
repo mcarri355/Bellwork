@@ -27,17 +27,58 @@ So, in this example, the number of bag colors that can eventually contain at lea
 
 How many bag colors can eventually contain at least one shiny gold bag? (The list of rules is quite long; make sure you get all of it.)*/
 
-const fs = require('fs');
+const fs = require('fs');  // Import the file system module
+
 try {
-  const input = fs
-    .readFileSync('Daily JS Challenge_Day 10_Input.txt', 'utf8')
-    .split('\r\n');
-  let bags = new Set();
-  for (let i = 0; i < input.length; i++) {
-    let input2 = input[i].split('contain');
-    console.log(input2);
+  const input = fs.readFileSync('Daily JS Challenge_Day 10_Input.txt', 'utf8');  // Read the input file
+  const rules = input.split('\r\n');  // Split input into lines
+  
+  const bagContents = {};  // Object to store bag relationships
+
+  for (let i = 0; i < rules.length; i++) {
+    const rule = rules[i];
+    const parts = rule.split(" bags contain ");  // Split each rule into outer bag and inner bags
+    const outerBag = parts[0];  // Get outer bag color
+    const innerBags = parts[1];  // Get inner bags description
+
+    // Check if inner bag contains other bags
+    if (innerBags !== "no other bags.") {
+      const innerBagList = innerBags.split(", ");  // Split inner bags into individual bag descriptions
+      bagContents[outerBag] = [];  // Initialize array for inner bags of outer bag
+      for (let j = 0; j < innerBagList.length; j++) {
+        const innerBag = innerBagList[j];  // Get individual inner bag description
+        const spaceIndex = innerBag.indexOf(" ");
+        const innerBagColor = innerBag.substring(spaceIndex + 1, innerBag.lastIndexOf(" "));  // Get inner bag color
+        bagContents[outerBag].push(innerBagColor);  // Store inner bag color in outer bag's array
+      }
+    }
   }
-  console.log(bags);
+
+  // Function to check if a bag can contain a shiny gold bag
+  function canContainShinyGold(bagColor) {
+    if (!bagContents[bagColor]) {
+      return false; 
+    }
+
+    const innerColors = bagContents[bagColor];  // Get colors of inner bags
+    for (let k = 0; k < innerColors.length; k++) {
+      const innerColor = innerColors[k];
+      if (innerColor === "shiny gold" || canContainShinyGold(innerColor)) {
+        return true;  
+      }
+    }
+
+    return false; 
+  }
+
+  let count = 0;  // Initialize count for bags that can contains sgb
+  for (const bagColor in bagContents) {
+    if (canContainShinyGold(bagColor)) {
+      count++;  
+    }
+  }
+
+  console.log(count);
 } catch (err) {
-  console.log('Error');
+  console.log(err); 
 }
