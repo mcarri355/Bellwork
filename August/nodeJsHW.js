@@ -44,3 +44,27 @@ fs.renameSync(
     }
   }
 );
+
+fs.rename(
+  path.join(dirname, '/tryThis/Regular Bros Show.txt'),
+  path.join(dirname, '/Regular Bros Show.txt')
+);
+fs.rmdir(path.join(dirname, '/tryThis'), function () {
+  console.log('Success');
+});
+fs.rename(
+  path.join(dirname, '/New Folder'),
+  path.join(dirname, '/Answer')
+);
+let e = fs.readdirSync(dirname);
+let u = [];
+for (let y = e.length - 1; y > e.length - 5; y--) {
+  u.unshift(
+    fs.readFileSync(path.join(dirname, '/' + e[y]), 'utf-8').split(' ')[
+      fs.readFileSync(path.join(dirname, '/' + e[y]), 'utf-8').split(' ')
+        .length - 1
+    ]
+  );
+}
+console.log(u);
+fs.writeFileSync(path.join(__dirname, '/Answer/answer.js'), u.join(' '));
