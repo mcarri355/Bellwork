@@ -42,27 +42,30 @@ Run your copy of the boot code. Immediately before any instruction is executed a
 */
 
 const fs = require('fs');
-let acc = 0;
-let arr = [];
+
 try {
   const input = fs
     .readFileSync('./September/Daily JS Challenge_Day 11_Input.txt', 'utf8')
     .split('\r\n');
-  for (let i = 0; i < input.length; ) {
-    let input2 = input[i].split(' ');
-    let value = Number(input2[1]);
-    if (input2[0] === 'acc') {
+  let acc = 0;
+  let i = 0;
+  const set = new Set();
+
+  for (; i >= 0 && i < input.length && !set.has(i); ) {
+    set.add(i);
+    const [operation, argument] = input[i].split(' ');
+    const value = Number(argument);
+
+    if (operation === 'acc') {
       acc += value;
       i++;
-    }
-    if (input2[0] === 'jmp') {
+    } else if (operation === 'jmp') {
       i += value;
-    }
-    if (input2[0] === 'nop') {
+    } else if (operation === 'nop') {
       i++;
     }
   }
   console.log(acc);
 } catch (err) {
-  console.log('error');
+  console.error('Error:', err);
 }
